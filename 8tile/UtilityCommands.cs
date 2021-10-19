@@ -29,6 +29,10 @@ namespace _8tile
             int rightcost = 0;
             int upcost = 0;
             int leftcost = 0;
+            int downcost2 = 0;
+            int rightcost2 = 0;
+            int upcost2 = 0;
+            int leftcost2 = 0;
 
             string lastlocation = "start";
 
@@ -96,15 +100,19 @@ namespace _8tile
                     x = temparray;
                     downcost = BadPostion(tempdown);
                     rightcost = BadPostion(tempright);
-                    if (downcost >= rightcost)//&& reversecheck(lastlocation)!=2 && reversecheck(lastlocation)<20 )
-                    {
-                        best.Add(tempright);
-                        x = tempright;
-                    }
-                    else
+                    downcost2= BadPostion2(tempdown);
+                    rightcost2 = BadPostion2(tempright);
+                    if (downcost <= rightcost && !reversecheck(tempright,best))// && downcost2 >= rightcost2)//&& reversecheck(lastlocation)!=2 && reversecheck(lastlocation)<20 )
                     {
                         best.Add(tempdown);
                         x = tempdown;
+                    }
+                    else
+                    {
+                        
+
+                        best.Add(tempright);
+                        x = tempright;
                     }
 
 
@@ -127,12 +135,17 @@ namespace _8tile
                     downcost = BadPostion(tempdown);
                     rightcost = BadPostion(tempright);
                     leftcost = BadPostion(templeft);
-                    if (downcost >= rightcost && downcost >= rightcost)// &&)// reversecheck(lastlocation) != 2 && reversecheck(lastlocation) < 20)
+
+                    downcost2 = BadPostion2(tempdown);
+                    rightcost2 = BadPostion2(tempright);
+                    leftcost2 = BadPostion2(templeft);
+
+                    if (downcost >= rightcost && downcost >= rightcost && !reversecheck(tempright, best))// && downcost2 >= rightcost2 && downcost2 >= rightcost2)// &&)// reversecheck(lastlocation) != 2 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempright);
                         x = tempright;
                     }
-                    else if (rightcost >= downcost && leftcost >= downcost)// &&)// reversecheck(lastlocation) != 4 && reversecheck(lastlocation) < 20)
+                    else if (rightcost >= downcost && leftcost >= downcost && !reversecheck(tempdown, best))// && rightcost2 >= downcost2 && leftcost2 >= downcost2)// &&)// reversecheck(lastlocation) != 4 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempdown);
                         x = tempdown;
@@ -162,7 +175,11 @@ namespace _8tile
 
                     leftcost = BadPostion(templeft);
 
-                    if (leftcost >= downcost)// && reversecheck(lastlocation) < 20)
+                    downcost2 = BadPostion2(tempdown);
+
+                    leftcost2 = BadPostion2(templeft);
+
+                    if (leftcost >= downcost && !reversecheck(tempdown, best))//&& leftcost2 >= downcost2)// && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempdown);
                         x = tempdown;
@@ -192,12 +209,17 @@ namespace _8tile
                     downcost = BadPostion(tempdown);
                     rightcost = BadPostion(tempright);
                     upcost = BadPostion(tempup);
-                    if (downcost >= rightcost && upcost >= downcost)//&& reversecheck(lastlocation) != 4 && reversecheck(lastlocation) < 20)
+
+                    downcost2 = BadPostion2(tempdown);
+                    rightcost2 = BadPostion2(tempright);
+                    upcost2 = BadPostion2(tempup);
+
+                    if (downcost >= rightcost && upcost >= rightcost  && !reversecheck(tempright, best))//&& downcost2 >= rightcost2 && upcost2 >= rightcost2)//&& reversecheck(lastlocation) != 4 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempright);
                         x = tempright;
                     }
-                    else if (rightcost >= downcost && upcost >= downcost)//&& reversecheck(lastlocation) != 6 && reversecheck(lastlocation) < 20)
+                    else if (rightcost >= downcost && upcost >= downcost && !reversecheck(tempdown, best))//&& rightcost2 >= downcost2 && upcost2 >= downcost2)//&& reversecheck(lastlocation) != 6 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempdown);
                         x = tempdown;
@@ -230,17 +252,23 @@ namespace _8tile
                     rightcost = BadPostion(tempright);
                     upcost = BadPostion(tempup);
                     leftcost = BadPostion(templeft);
-                    if (downcost >= rightcost && downcost >= rightcost && leftcost >= rightcost && upcost > rightcost)// && reversecheck(lastlocation) != 5 && reversecheck(lastlocation) < 20)
+
+                    downcost2 = BadPostion2(tempdown);
+                    rightcost2 = BadPostion2(tempright);
+                    upcost2 = BadPostion2(tempup);
+                    leftcost2 = BadPostion2(templeft);
+
+                    if (downcost >= rightcost && downcost >= rightcost && leftcost >=rightcost && upcost >= rightcost && !reversecheck(tempright, best))//&& downcost2 >= rightcost2 && downcost2 >= rightcost2 && leftcost2 >= rightcost2 && upcost2 > rightcost2 )// && reversecheck(lastlocation) != 5 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempright);
                         x = tempright;
                     }
-                    else if (downcost <= rightcost && leftcost >= downcost && upcost >= downcost)//&& reversecheck(lastlocation) != 7 && reversecheck(lastlocation) < 20)
+                    else if (downcost <= rightcost && leftcost >= downcost && upcost >= downcost && !reversecheck(tempdown, best))// && downcost2 <= rightcost2 && leftcost2 >= downcost2 && upcost2 >= downcost2)//&& reversecheck(lastlocation) != 7 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(tempdown);
                         x = tempdown;
                     }
-                    else if (rightcost >= leftcost && upcost >= leftcost && downcost >= leftcost)// && reversecheck(lastlocation) != 3 && reversecheck(lastlocation) < 20)
+                    else if (rightcost >= leftcost && upcost >= leftcost && downcost >= leftcost && !reversecheck(templeft, best))// && rightcost2 >= leftcost2 && upcost2 >= leftcost2 && downcost2 >= leftcost2)// && reversecheck(lastlocation) != 3 && reversecheck(lastlocation) < 20)
                     {
                         best.Add(templeft);
                         x = templeft;
@@ -270,12 +298,16 @@ namespace _8tile
                     downcost = BadPostion(tempdown);
                     upcost = BadPostion(tempup);
                     leftcost = BadPostion(templeft);
-                    if (downcost >= upcost && leftcost > upcost)
+
+                    downcost2 = BadPostion2(tempdown);
+                    upcost2 = BadPostion2(tempup);
+                    leftcost2 = BadPostion2(templeft);
+                    if (downcost >= upcost && leftcost >= upcost && !reversecheck(tempup, best))//&& downcost2 >= upcost2 && leftcost2 > upcost2)
                     {
                         best.Add(tempup);
                         x = tempup;
                     }
-                    else if (rightcost >= downcost && leftcost > downcost)
+                    else if (rightcost >= downcost && leftcost >= downcost && !reversecheck(tempdown, best))//&& rightcost2 >= downcost2 && leftcost2 > downcost2)
                     {
                         best.Add(tempdown);
                         x = tempdown;
@@ -304,7 +336,12 @@ namespace _8tile
                     upcost = BadPostion(tempup);
 
                     leftcost = BadPostion(tempright);
-                    if (upcost >= leftcost)
+
+                    upcost2 = BadPostion2(tempup);
+
+                    leftcost2 = BadPostion2(tempright);
+
+                    if (upcost >= leftcost && !reversecheck(tempright, best))//&& upcost2 >= leftcost2)
                     {
                         best.Add(tempright);
                         x = tempright;
@@ -336,13 +373,18 @@ namespace _8tile
                     upcost = BadPostion(tempup);
                     rightcost = BadPostion(tempright);
                     leftcost = BadPostion(templeft);
-                    if (upcost >= leftcost && rightcost >= leftcost)
+
+                    upcost2 = BadPostion2(tempup);
+                    rightcost2 = BadPostion2(tempright);
+                    leftcost2 = BadPostion2(templeft);
+
+                    if (upcost >= leftcost && rightcost >= leftcost && !reversecheck(templeft, best))// && upcost2 >= leftcost2 && rightcost2 >= leftcost2)
                     {
                         best.Add(templeft);
                         x = templeft;
                     }
 
-                    else if (leftcost >= upcost && rightcost >= upcost)
+                    else if (leftcost >= upcost && rightcost >= upcost && !reversecheck(tempup, best))// && leftcost2 >= upcost2 && rightcost2 >= upcost2)
                     {
                         best.Add(tempup);
                         x = tempup;
@@ -371,7 +413,11 @@ namespace _8tile
                     upcost = BadPostion(tempup);
 
                     leftcost = BadPostion(templeft);
-                    if (upcost >= leftcost)
+                    upcost2 = BadPostion2(tempup);
+
+                    leftcost2 = BadPostion2(templeft);
+
+                    if (upcost >= leftcost && !reversecheck(templeft, best))//&& upcost2 >= leftcost2)
                     {
                         best.Add(templeft);
                         x = templeft;
@@ -398,35 +444,15 @@ namespace _8tile
 
         }
 
-        public int reversecheck(string loc)
+        public bool reversecheck(int [,]x,List <int[,]> look)
         {
-            switch (loc)
+            if (look.Contains(x))
             {
-                case "TOPLEFT":
-                    {
-                        return 0;
-                    }
-
-                case "TOPCENTER":
-                    return 1;
-                case "TOPRIGHT":
-                    return 2;
-                case "CENTERLEFT":
-                    return 3;
-                case "CENTER":
-                    return 4;
-                case "CENTERRIGHT":
-                    return 5;
-                case "BOTTOMLEFT":
-                    return 6;
-                case "BOTTOMCENTER":
-                    return 7;
-                case "BOTTOMRIGHT":
-                    return 8;
-                default: return 100;
-
-
+                return true;
             }
+            else return false;
+
+
 
         }
 
@@ -464,7 +490,7 @@ namespace _8tile
             return temp;
         }
 
-        public int BadPostion(int[,] x)
+        public int BadPostion2(int[,] x)
         {   
             int[,] goal = { { 1, 2, 3 }, { 8, 0, 4 }, { 7, 6, 5 } };
             int result = 0;
@@ -481,7 +507,7 @@ namespace _8tile
             return result;
         }
 
-        public int BadPostion2(int[,] x)
+        public int BadPostion(int[,] x)
         {
             int[,] goal = { { 1, 2, 3 }, { 8, 0, 4 }, { 7, 6, 5 } };
             int result = 0;

@@ -61,7 +61,7 @@ namespace _8tile
             _1_1.Text = x[1, 1].ToString();
             _2_1.Text = x[1, 2].ToString();
             _0_2.Text = x[2, 0].ToString();
-            _2_1.Text = x[2, 1].ToString();
+            _1_2.Text = x[2, 1].ToString();
             _2_2.Text = x[2, 2].ToString();
 
 
@@ -87,7 +87,7 @@ namespace _8tile
             _1_1.Text = x[1, 1].ToString();
             _2_1.Text = x[1, 2].ToString();
             _0_2.Text = x[2, 0].ToString();
-            _2_1.Text = x[2, 1].ToString();
+            _1_2.Text = x[2, 1].ToString();
             _2_2.Text = x[2, 2].ToString();
 
         }
