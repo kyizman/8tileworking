@@ -96,5 +96,35 @@ namespace _8tile
         {
 
         }
+
+        private void Astar_Click(object sender, RoutedEventArgs e)
+        {
+            {
+                int[,] holder = { {int.Parse(_0_0.Text), int.Parse(_1_0.Text), int.Parse(_2_0.Text) }, {int.Parse(_0_1.Text), int.Parse(_1_1.Text), int.Parse(_2_1.Text) },
+                { int.Parse(_0_2.Text),int.Parse(_1_2.Text),int.Parse(_2_2.Text)} };
+
+                astar uniform = new astar();
+                Node start = new Node(holder);
+
+
+                start.sethuristic(start.BadPostion(holder));
+
+                start.setf();
+                List<Node> y = uniform.astarsearch(start);
+
+                int[,] x = y.First().data;
+
+                _0_0.Text = x[0, 0].ToString();
+                _1_0.Text = x[0, 1].ToString();
+                _2_0.Text = x[0, 2].ToString();
+                _0_1.Text = x[1, 0].ToString();
+                _1_1.Text = x[1, 1].ToString();
+                _2_1.Text = x[1, 2].ToString();
+                _0_2.Text = x[2, 0].ToString();
+                _1_2.Text = x[2, 1].ToString();
+                _2_2.Text = x[2, 2].ToString();
+
+            }
+        }
     }
 }

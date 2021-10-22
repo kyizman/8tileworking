@@ -11,18 +11,73 @@ namespace _8tile
         //initilizers
         public List<Node> childs = new List<Node>();
         public Node parent;
-        public int[,] data = new int[3,3];
-        public int x=0;
+        public int[,] data = new int[3, 3];
+        public int x = 0;
+
+        public int distance = 0;
+        public int huristic = 0;
+        public int fcost = 0;
 
         //node construct
         public Node(int[,] x)
         {
+
             setdata(x);
 
-      
+
+
+
+
+        }
+
+        public Node(int[,] x, int y)
+        {
+
+            setdata(x);
+
+            setdistance(y);
+
+
+
+
+        }
+
+        public void setf()
+        {
+            fcost = distance + huristic;
+        }
+
+        public int getfcost()
+        {
+            return fcost;
         }
 
 
+        public void setdistance(int q)
+        {
+            distance = q;
+
+
+        }
+
+        public int getdistance()
+        {
+            return distance;
+
+
+        }
+
+
+        public int gethuristic()
+        {
+            return huristic;
+        }
+
+        public void sethuristic(int w)
+        {
+            huristic = w;
+        }
+            
 
 
         //attempt to expand
@@ -58,7 +113,7 @@ namespace _8tile
             {
 
                 nodemovedown(data);
-              
+
                 nodemoveleft(data);
 
 
@@ -69,8 +124,8 @@ namespace _8tile
 
                 nodemovedown(data);
                 nodemoveRight(data);
-              
-                
+
+
                 nodemoveUp(data);
 
             }
@@ -91,7 +146,7 @@ namespace _8tile
 
 
                 nodemovedown(data);
-               
+
                 nodemoveleft(data);
 
                 nodemoveUp(data);
@@ -104,9 +159,9 @@ namespace _8tile
             else if (location == "BOTTOMLEFT")
             {
 
-               
+
                 nodemoveRight(data);
-                
+
                 nodemoveUp(data);
 
 
@@ -116,7 +171,7 @@ namespace _8tile
             else if (location == "BOTTOMCENTER")
             {
 
-              
+
                 nodemoveRight(data);
                 nodemoveleft(data);
 
@@ -129,7 +184,7 @@ namespace _8tile
             {
 
 
-              
+
                 nodemoveleft(data);
 
                 nodemoveUp(data);
@@ -139,12 +194,12 @@ namespace _8tile
         }
 
         //set array
-            public void setdata(int[,]x)
+        public void setdata(int[,] x)
         {
             data = x;
 
 
-        
+
 
 
         }
@@ -152,7 +207,7 @@ namespace _8tile
         //will move the item in the array right and sawp with item there
         public void nodemoveRight(int[,] x)
         {
-            
+
             int LOCx = 0;
             int LOCy = 0;
             int temp = 0;
@@ -168,23 +223,27 @@ namespace _8tile
                     }
                 }
 
-        
-                temp = temparr[LOCx, LOCy + 1];
 
-                temparr[LOCx, LOCy + 1] = 0;
+            temp = temparr[LOCx, LOCy + 1];
 
-                temparr[LOCx, LOCy] = temp;
+            temparr[LOCx, LOCy + 1] = 0;
 
-                Node child = new Node(temparr);
-                childs.Add(child);
-                child.parent = this;
-            
-            
+            temparr[LOCx, LOCy] = temp;
 
-            
+            Node child = new Node(temparr);
+            child.distance = this.distance++;
+            child.huristic = BadPostion(child.data);
+
+            child.setf();
+            childs.Add(child);
+            child.parent = this;
+           
+
+
+
         }
         //will move empty down and swap
-        public void nodemovedown(int[,]x)
+        public void nodemovedown(int[,] x)
         {
             int LOCx = 0;
             int LOCy = 0;
@@ -200,20 +259,24 @@ namespace _8tile
                         LOCy = p;
                     }
                 }
+
+            temp = temparr[LOCx + 1, LOCy];
+
+            temparr[LOCx + 1, LOCy] = 0;
+
+            temparr[LOCx, LOCy] = temp;
+            Node child = new Node(temparr);
+            child.distance = this.distance++;
+            child.huristic = BadPostion(child.data);
+
+            child.setf();
+            childs.Add(child);
+            child.parent = this;
           
-                temp = temparr[LOCx + 1, LOCy];
-
-                temparr[LOCx + 1, LOCy] = 0;
-
-                temparr[LOCx, LOCy] = temp;
-                Node child = new Node(temparr);
-                childs.Add(child);
-                child.parent = this;
-            
 
         }
         //move empty up and swap
-        public void nodemoveUp(int[,]x)
+        public void nodemoveUp(int[,] x)
         {
             int LOCx = 0;
             int LOCy = 0;
@@ -229,20 +292,26 @@ namespace _8tile
                         LOCy = p;
                     }
                 }
-         
-                temp = temparr[LOCx - 1, LOCy];
 
-                temparr[LOCx - 1, LOCy] = 0;
+            temp = temparr[LOCx - 1, LOCy];
 
-                temparr[LOCx, LOCy] = temp;
-                temparr[LOCx, LOCy] = temp;
-                Node child = new Node(temparr);
-                childs.Add(child);
-                child.parent = this;
+            temparr[LOCx - 1, LOCy] = 0;
+
+            temparr[LOCx, LOCy] = temp;
+            temparr[LOCx, LOCy] = temp;
+            Node child = new Node(temparr);
+
+            child.distance = this.distance++;
+            child.huristic = BadPostion(child.data);
+
+            child.setf();
+            childs.Add(child);
+            child.parent = this;
+            
             
         }
         //move empty left and swap
-        public void nodemoveleft(int[,]x)
+        public void nodemoveleft(int[,] x)
         {
             int LOCx = 0;
             int LOCy = 0;
@@ -258,16 +327,20 @@ namespace _8tile
                         LOCy = p;
                     }
                 }
-           
-                temp = temparr[LOCx, LOCy - 1];
 
-                temparr[LOCx, LOCy - 1] = 0;
+            temp = temparr[LOCx, LOCy - 1];
 
-                temparr[LOCx, LOCy] = temp;
-                Node child = new Node(temparr);
-                childs.Add(child);
-                child.parent = this;
-            
+            temparr[LOCx, LOCy - 1] = 0;
+
+            temparr[LOCx, LOCy] = temp;
+            Node child = new Node(temparr);
+            child.distance = this.distance++;
+            child.huristic = BadPostion(child.data);
+
+            child.setf();
+            childs.Add(child);
+            child.parent = this;
+          
 
         }
         //copy array
@@ -281,7 +354,7 @@ namespace _8tile
         }
 
         //check if arrays are the same for selected node
-      public bool same(int[,]x)
+        public bool same(int[,] x)
         {
             bool check = true;
 
@@ -290,14 +363,37 @@ namespace _8tile
             {
                 for (int p = 0; p < 3; p++)
                 {
-                   if (data[i,p]!=x[i,p])
+                    if (data[i, p] != x[i, p])
                     {
                         check = false;
                     }
                 }
             }
             return check;
-}           
+        }
 
+
+
+
+
+
+
+        public int BadPostion(int[,] x)
+        {
+            int[,] goal = { { 1, 2, 3 }, { 8, 0, 4 }, { 7, 6, 5 } };
+            int result = 0;
+            int[,] temparr = x;
+            for (int i = 0; i < x.GetLength(0); i++)
+            {
+                for (int j = 0; j < x.GetLength(1); j++)
+                {
+                    if (goal[i, j] != x[i, j])
+                    {
+                        result += 1;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
